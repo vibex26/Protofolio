@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Vibex Studio — Cinematic video editing portfolio with animated particle background, glowing typography, and smooth interactions." />
+  <title>Vibex Studio — Video Editing Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ----------------------------
+       Base + Theme
+    ------------------------------*/
+    :root{
+      --bg:#0b0e13;
+      --bg-2:#0f141c;
+      --ink:#e9eef6;
+      --muted:#95a3b8;
+      --brand:#7c5cff; /* vibey purple */
+      --accent:#00d9ff; /* cyan */
+      --glow: 0 0 24px rgba(124,92,255,.35), 0 0 48px rgba(0,217,255,.15);
+      --radius: 18px;
+      --shadow: 0 6px 30px rgba(0,0,0,.35);
+      --ring: 0 0 0 2px rgba(124,92,255,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      height:100%;
+      scroll-behavior:smooth;
+      background:var(--bg);
+      color:var(--ink);
+      font-family: 'Montserrat', sans-serif;
+      line-height:1.6;
+      font-size:16px;
+      -webkit-font-smoothing:antialiased;
+    }
+    html{
+      height: 100%;
+    }
+    body{
+      display:flex;
+      flex-direction:column;
+    }
+    a{
+      color:var(--brand);
+      text-decoration:none;
+      transition:color .2s ease;
+    }
+    a:hover{
+      color:var(--accent);
+    }
+    h1,h2,h3,h4{
+      margin:0;
+      line-height:1.2;
+      font-weight:700;
+      letter-spacing:-.03em;
+    }
+    h1{font-size:clamp(2.5rem, 5vw, 4rem)}
+    h2{font-size:clamp(1.75rem, 4vw, 3rem)}
+    h3{font-size:clamp(1.25rem, 3vw, 1.75rem)}
+    h4{font-size:clamp(1rem, 2vw, 1.25rem)}
+    img{
+      max-width:100%;
+      height:auto;
+      vertical-align:middle;
+      user-select:none;
+      pointer-events:none;
+    }
+    button{
+      background:var(--bg-2);
+      color:var(--ink);
+      border:none;
+      padding:1em 1.75em;
+      border-radius:12px;
+      font-weight:500;
+      cursor:pointer;
+      transition:all .2s ease;
+    }
+    button:hover{
+      background:var(--brand);
+      color:var(--ink);
+      box-shadow:var(--shadow);
+    }
+    button:focus-visible{
+      outline:none;
+      box-shadow:var(--ring);
+    }
+    .container{
+      max-width:1000px;
+      padding:1rem 1.5rem;
+      margin:0 auto;
+      width:100%;
+    }
+    .content{
+      padding:4rem 0 6rem;
+    }
+
+    /* ----------------------------
+       Layout
+    ------------------------------*/
+    main{
+      position:relative;
+      z-index:2;
+      flex-grow:1;
+    }
+    section{
+      position:relative;
+    }
+    section.hero{
+      min-height:90vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:0 1rem;
+    }
+    .portfolio-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+      gap:1rem;
+    }
+    .portfolio-grid .video-embed{
+      position:relative;
+      padding-bottom:56.25%; /* 16:9 aspect ratio */
+      height:0;
+      overflow:hidden;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      background:var(--bg-2);
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+    .portfolio-grid .video-embed:hover{
+      transform:translateY(-5px);
+      box-shadow:var(--glow);
+    }
+    .portfolio-grid .video-embed iframe{
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      border:none;
+      border-radius:var(--radius);
+    }
+    .portfolio-grid .video-embed.large{
+      grid-column:span 2;
+    }
+    .reviews-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+      gap:1rem;
+    }
+    .about-layout{
+      display:flex;
+      flex-direction:column;
+      gap:2rem;
+      align-items:center;
+    }
+    .about-image img{
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      max-width:300px;
+      width:100%;
+      height:auto;
+    }
+    .tools-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(120px, 1fr));
+      gap:1.5rem;
+    }
+    .contact-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:2rem;
+    }
+    @media(min-width:768px){
+      .contact-grid{
+        grid-template-columns:1fr 1fr;
+      }
+      .about-layout{
+        flex-direction:row;
+        gap:4rem;
+        align-items:flex-start;
+      }
+      .about-image{
+        flex-shrink:0;
+      }
+    }
+
+    /* ----------------------------
+       Particles background
+    ------------------------------*/
+    #particles-js{
+      position:absolute;
+      width:100%;
+      height:100%;
+      background:var(--bg);
+      z-index:1;
+      top:0;
+      left:0;
+    }
+
+    /* ----------------------------
+       Typography & Effects
+    ------------------------------*/
+    .hero h1 .gradient{
+      background:linear-gradient(90deg, var(--brand), var(--accent));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      -webkit-filter: drop-shadow(0 0 10px rgba(124,92,255,.35));
+      filter: drop-shadow(0 0 10px rgba(124,92,255,.35));
+    }
+    .tagline{
+      font-size:clamp(1rem, 2vw, 1.2rem);
+      color:var(--muted);
+      max-width:600px;
+      margin:1rem auto 2.5rem;
+    }
+    .about-text .animated-glow{
+      position:relative;
+      animation:glow 10s ease-in-out infinite alternate;
+      text-shadow:0 0 10px var(--brand), 0 0 20px var(--brand);
+    }
+    @keyframes glow{
+      0% { text-shadow:0 0 10px var(--brand), 0 0 20px var(--brand); }
+      100% { text-shadow:0 0 10px var(--accent), 0 0 20px var(--accent); }
+    }
+
+    /* ----------------------------
+       Animations
+    ------------------------------*/
+    @keyframes fadeIn{
+      0%{opacity:0;transform:translateY(20px);}
+      100%{opacity:1;transform:translateY(0);}
+    }
+    .fade-in{
+      opacity:0;
+      animation:fadeIn .8s ease forwards;
+    }
+    
+    /* ----------------------------
+       Header
+    ------------------------------*/
+    header{
+      position:sticky;
+      top:0;
+      z-index:10;
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      background:linear-gradient(180deg, rgba(15,20,28,.8), rgba(15,20,28,.35));
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    header .container{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .logo h3{
+      color:var(--brand);
+    }
+    .logo h3 span{
+      color:var(--accent);
+    }
+    .logo a{
+      text-decoration:none;
+    }
+    .logo h3::before{
+      content:'';
+      display:inline-block;
+      width:24px;
+      height:24px;
+      background:var(--brand);
+      border-radius:50%;
+      vertical-align:middle;
+      margin-right:.5rem;
+      box-shadow:var(--glow);
+    }
+    nav a{
+      color:var(--muted);
+      margin-left:1.5rem;
+      font-weight:500;
+    }
+    nav a.btn{
+      background:var(--brand);
+      color:var(--ink);
+      padding:.75em 1.5em;
+      border-radius:12px;
+      transition:all .2s ease;
+    }
+    nav a.btn:hover{
+      background:var(--accent);
+      box-shadow:var(--shadow);
+    }
+    nav a.btn:focus-visible{
+      outline:none;
+      box-shadow:var(--ring);
+    }
+    
+    /* ----------------------------
+       Portfolio tiles
+    ------------------------------*/
+    .tile{
+      position:relative;
+      overflow:hidden;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      display:flex;
+      flex-direction:column;
+      background:var(--bg-2);
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+    .tile:hover{
+      transform:translateY(-5px);
+      box-shadow:var(--glow);
+    }
+    .tile .inner{
+      padding:1.5rem;
+    }
+    .tile .meta{
+      color:var(--muted);
+      font-size:.9rem;
+    }
+    
+    /* ----------------------------
+       Testimonial cards
+    ------------------------------*/
+    .card{
+      background:var(--bg-2);
+      border-radius:var(--radius);
+      padding:2rem;
+      box-shadow:var(--shadow);
+      transform-style:preserve-3d;
+      transform:perspective(700px) rotateX(0deg) rotateY(0deg) translateZ(0);
+      transition:transform .15s ease-out;
+    }
+    .card blockquote{
+      margin:0 0 1rem;
+      font-style:italic;
+      color:var(--ink);
+    }
+    .card .author{
+      font-weight:600;
+    }
+    .card .author span{
+      color:var(--muted);
+      font-weight:400;
+      font-size:.9rem;
+    }
+
+    /* ----------------------------
+       Tools
+    ------------------------------*/
+    .tool-icon{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      transition:transform .2s ease;
+    }
+    .tool-icon svg{
+      width:70px;
+      height:70px;
+      transition:filter .3s ease, transform .2s ease;
+    }
+    .tool-icon:hover{
+      transform:translateY(-5px);
+    }
+    .tool-icon:hover svg{
+      transform:scale(1.05);
+      filter: drop-shadow(0 0 10px rgba(124,92,255,.5));
+    }
+    .tool-icon span{
+      margin-top:.5rem;
+      font-weight:500;
+    }
+
+    /* ----------------------------
+       Contact Form
+    ------------------------------*/
+    .form-card, .contact-info-card{
+      background:var(--bg-2);
+      padding:2rem;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    form{
+      display:flex;
+      flex-direction:column;
+      gap:1rem;
+    }
+    input,textarea{
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.1);
+      color:var(--ink);
+      padding:1em;
+      border-radius:8px;
+    }
+    input:focus,textarea:focus{
+      outline:none;
+      border-color:var(--brand);
+    }
+    textarea{
+      resize:vertical;
+    }
+    .contact-info-card .info-row{
+      display:flex;
+      align-items:center;
+      gap:1rem;
+      margin-bottom:1rem;
+    }
+    .contact-info-card .info-row svg{
+      width:24px;
+      height:24px;
+      fill:var(--brand);
+    }
+    .contact-info-card a{
+      color:var(--ink);
+    }
+    .social-links{
+      display:flex;
+      gap:1.5rem;
+      justify-content:center;
+      margin-top:2rem;
+    }
+    .social-links a svg{
+      fill:var(--muted);
+      width:30px;
+      height:30px;
+      transition:transform .2s ease, filter .3s ease;
+    }
+    .social-links a:hover svg{
+      transform:scale(1.1);
+      filter: drop-shadow(0 0 8px rgba(124,92,255,.7));
+    }
+
+    /* ----------------------------
+       Footer
+    ------------------------------*/
+    footer{
+      background:var(--bg-2);
+      text-align:center;
+      padding:2rem 1rem;
+      color:var(--muted);
+      border-top:1px solid rgba(255,255,255,.06);
+    }
+
+    /* ----------------------------
+       Responsive Adjustments
+    ------------------------------*/
+    @media(max-width:768px){
+      nav{
+        display:none;
+      }
+      .logo h3::before{
+        display:none;
+      }
+    }
+    @media(min-width:768px){
+      .contact-grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Particles.js Container -->
+  <div id="particles-js"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="logo">
+        <a href="#hero">
+          <h3>Vibex<span>Studio</span></h3>
+        </a>
+      </div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#contact" class="btn">Get a Quote</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+      <div class="container">
+        <h1 class="fade-in">Crafting Cinematic <br /><span class="gradient">Experiences</span></h1>
+        <p class="tagline fade-in" style="animation-delay:.2s">We bring your vision to life through professional video editing, motion graphics, and sound design. From commercials to films, we create visuals that resonate.</p>
+        <button class="fade-in" style="animation-delay:.4s" onclick="location.href='#contact'">Start a Project</button>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="content">
+      <div class="container">
+        <h2>About Us:</h2>
+        <div class="about-layout reveal">
+          <div class="about-image">
+            <img src="mrrobot.png" alt="Vibex Studio team member" />
+          </div>
+          <div class="about-text">
+            <h3 style="  animation:glow 10s ease-in-out infinite alternate;
+      text-shadow:0 0 10px var(--brand), 0 0 20px var(--brand); ">Editor:</h3>
+            <p>
+              we create
+              <span class="animated-glow">high-quality, engaging</span> reels for Instagram, TikTok, and YouTube Shorts using<span class="animated-glow"> Adobe Softwares.</span>.   
+our edits include smooth transitions, motion graphics, text animations, sound design, and cinematic color grading, all optimized for social media.
+From quick promotional clips to viral, worthy content, we deliver videos that grab attention and keep viewers watching.
+project can be prepared with your refrence.
+            </p>
+            <p style="  animation:glow 10s ease-in-out infinite alternate;
+      text-shadow:0 0 10px var(--brand), 0 0 20px var(--brand); ">
+              𝚆𝚎 𝚍𝚘𝚗'𝚝 𝚓𝚞𝚜𝚝 𝚎𝚍𝚒𝚝 𝚠𝚎 𝚌𝚛𝚎𝚊𝚝𝚎,
+              𝚆𝚎 𝚠𝚘𝚗’𝚝 𝚓𝚞𝚜𝚝 𝚋𝚎 𝚌𝚕𝚒𝚎𝚗𝚝 𝚊𝚗𝚍 𝚎𝚍𝚒𝚝𝚘𝚛, 𝚠𝚎’𝚕𝚕 𝚋𝚎 𝚙𝚊𝚛𝚝𝚗𝚎𝚛𝚜, 𝚠𝚘𝚛𝚔𝚒𝚗𝚐 𝚝𝚘𝚐𝚎𝚝𝚑𝚎𝚛 𝚝𝚘 𝚐𝚛𝚘𝚠 𝚘𝚞𝚛 𝚋𝚛𝚊𝚗𝚍𝚜
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Portfolio Section -->
+<section id="portfolio" class="content">
+  <div class="container">
+    <h2>Recent Work</h2>
+    <p class="tagline">A selection of our latest video editing projects. These are embedded directly from social media and play inline.</p>
+    <div class="portfolio-grid">
+
+      <article class="tile large reveal">
+        <div class="video-embed">
+          <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@vibex_26/video/7535453038580862215" data-video-id="7535453038580862215" style="max-width: 605px;min-width: 325px;">
+            <section></section>
+          </blockquote>
+          <script async src="https://www.tiktok.com/embed.js"></script>
+        </div>
+        <div class="inner">
+          <h4>Urban Adventure - Product Ad</h4>
+          <div class="meta">Editing • Color Grading • Sound Design</div>
+        </div>
+      </article>
+
+      <article class="tile reveal">
+        <div class="video-embed">
+          <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@vibex_26/video/7536476563764776199" data-video-id="7536476563764776199" style="max-width: 605px;min-width: 325px;">
+            <section></section>
+          </blockquote>
+          <script async src="https://www.tiktok.com/embed.js"></script>
+        </div>
+        <div class="inner">
+          <h4>Modern Cuisine - Promo</h4>
+          <div class="meta">Editing • Motion GFX • Sound Design</div>
+        </div>
+      </article>
+
+      <article class="tile reveal">
+        <div class="video-embed">
+          <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@vibex_26/video/7525518274147159314" data-video-id="7525518274147159314" style="max-width: 605px;min-width: 325px;">
+            <section></section>
+          </blockquote>
+          <script async src="https://www.tiktok.com/embed.js"></script>
+        </div>
+        <div class="inner">
+          <h4>Tech Startup - Explainer</h4>
+          <div class="meta">Editing • Motion GFX • Voiceover</div>
+        </div>
+      </article>
+
+      <article class="tile large reveal">
+        <div class="video-embed">
+          <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@vibex_26/video/7526229423155170567" data-video-id="7526229423155170567" style="max-width: 605px;min-width: 325px;">
+            <section></section>
+          </blockquote>
+          <script async src="https://www.tiktok.com/embed.js"></script>
+        </div>
+        <div class="inner">
+          <h4>Cinematic Travelogue - Documentary</h4>
+          <div class="meta">Color Grading • Music Scoring</div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+    <!-- Client Reviews Section -->
+    <section id="reviews" class="content">
+      <div class="container">
+        <h2>What Clients Say</h2>
+        <p class="tagline">Trusted by brands and creators worldwide.</p>
+        <div class="reviews-grid">
+          <!-- Review Card 1 -->
+          <div class="card tilt reveal">
+            <blockquote>"Vibex Studio's work is simply outstanding. They took our raw footage and transformed it into a masterpiece. The attention to detail is unmatched."</blockquote>
+            <div class="author">Alex R. <span>— TechCorp</span></div>
+          </div>
+          <!-- Review Card 2 -->
+          <div class="card tilt reveal">
+            <blockquote>"The team was a pleasure to work with. They were responsive, professional, and delivered a final product that exceeded all our expectations."</blockquote>
+            <div class="author">Jessica L. <span>— UrbanWear</span></div>
+          </div>
+          <!-- Review Card 3 -->
+          <div class="card tilt reveal">
+            <blockquote>"Our marketing video looks incredible! The creative editing and motion graphics elevated our brand to a whole new level. Highly recommend!"</blockquote>
+            <div class="author">Michael B. <span>— Creative Collective</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="content">
+      <div class="container">
+        <h2>Get a Quote</h2>
+        <p class="tagline">Let's collaborate on your next project. Fill out the form and we'll get back to you soon.</p>
+        <div class="contact-grid">
+          <div class="form-card reveal">
+       <form action="https://api.web3forms.com/submit" method="POST" id="contactForm">
+    <input type="hidden" name="access_key" value="9e527324-cd91-41cc-a505-ebedf0cf149f">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="message" rows="5" placeholder="Tell us about your project" required></textarea>
+    <button type="submit">Send Message</button>
+</form>
+
+<script>
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Redirect to your custom page
+                window.location.href = 'done.html';
+            } else {
+                alert('An error occurred. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Something went wrong!');
+        });
+    });
+</script>
+          </div>
+          <div class="contact-info-card reveal" >
+            <h3>Get in Touch</h3>
+            <i style="  animation:glow 10s ease-in-out infinite alternate;
+      text-shadow:0 0 10px var(--brand), 0 0 20px var(--brand); ">Ready to start? Contact us through the form, or reach out directly via email or phone. We look forward to hearing from you.</i>
+            <div class="info-row">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 4h-4v-2c0-1.1-.9-2-2-2h-8c-1.1 0-2 .9-2 2v2H2c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 6h16v12H4V6zm2 1.5h12V9H6V7.5zM6 10.5h12V12H6V10.5z"/></svg>
+              <a href="mailto:info@vibexstudio.com">xhitler26@gmail.com</a>
+            </div>
+            <div class="info-row">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62 10.79l-1.41-1.41-1.41 1.41c-.39.39-.39 1.02 0 1.41l1.41 1.41 1.41-1.41c.39-.39.39-1.02 0-1.41zM20 18.5V16c-2.21 0-4-.56-4.5-1.5-1.12 1.12-2.3 2.1-3.5 2.1-1.2 0-2.38-.98-3.5-2.1-.5.94-2.29 1.5-4.5 1.5V18.5c2.21 0 4 .56 4.5 1.5 1.12-1.12 2.3-2.1 3.5-2.1 1.2 0 2.38.98 3.5 2.1.5-.94 2.29-1.5 4.5-1.5zM12 2c-5.52 0-10 4.48-10 10s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM12 4.5c-4.14 0-7.5 3.36-7.5 7.5S7.86 19.5 12 19.5s7.5-3.36 7.5-7.5S16.14 4.5 12 4.5z"/></svg>
+              <a href="tel:+1-123-456-7890">+92 315 9857704</a>
+            </div>
+            <div class="social-links">
+              <!-- Facebook -->
+              <a href="https://www.facebook.com/vibex27" target="_blank" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.675 0h-21.35c-.733 0-1.325.592-1.325 1.325v21.35c0 .733.592 1.325 1.325 1.325h11.378v-9.294h-3.136v-3.622h3.136v-2.671c0-3.111 1.89-4.806 4.672-4.806 1.325 0 2.464.099 2.796.143v3.235h-1.916c-1.503 0-1.796.716-1.796 1.764v2.327h3.585l-.467 3.622h-3.118v9.294h6.068c.733 0 1.325-.592 1.325-1.325v-21.35c0-.733-.592-1.325-1.325-1.325z"/></svg>
+              </a>
+              <!-- TikTok -->
+              <a href="https://www.tiktok.com/@vibex_26" target="_blank" aria-label="TikTok">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.25 10.74h-3.92V6.82h3.92V4.99c-.19-1.93-1.07-3.72-2.82-5.07-2.02-1.5-4.43-1.9-6.9-1.22-.92.25-1.8.68-2.58 1.25-.79.57-1.46 1.25-2.01 2.02-.55.77-.96 1.6-1.23 2.5-1.12 3.9-.38 8.16 2.09 11.23 2.47 3.07 6.13 4.88 9.94 4.88 2.08 0 4.09-.5 5.89-1.44 1.8-1 3.2-2.3 4.2-3.9 1-1.6 1.6-3.4 1.7-5.32h-3.92c-.11 1.6-.68 3.1-1.63 4.41-1.07 1.4-2.5 2.5-4.14 3.1-1.64.6-3.41.8-5.17.5-3.04-.5-5.6-2.1-7.23-4.63-1.63-2.53-2.3-5.6-1.93-8.8.11-1.1.4-2.16.88-3.14.48-.98 1.1-1.86 1.84-2.64.74-.78 1.57-1.44 2.48-1.97.91-.53 1.86-.92 2.85-1.16 1.09-.27 2.22-.38 3.35-.38 2.14 0 4.2.5 6.06 1.47 1.86.97 3.31 2.37 4.3 4.09z"/></svg>
+              </a>
+              <!-- Instagram -->
+              <a href="https://www.instagram.com/vibex_26/" target="_blank" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.25.148 4.773 1.671 4.921 4.921.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.148 3.25-1.671 4.773-4.921 4.921-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-3.25-.148-4.773-1.671-4.921-4.921-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.148-3.25 1.671-4.773 4.921-4.921 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.635 0-4.085.016-5.513.08-3.921.181-6.104 2.364-6.284 6.284-.064 1.428-.08 1.878-.08 5.513s.016 4.085.08 5.513c.181 3.921 2.364 6.104 6.284 6.284 1.428.064 1.878.08 5.513.08s4.085-.016 5.513-.08c3.921-.181 6.104-2.364 6.284-6.284.064-1.428.08-1.878.08-5.513s-.016-4.085-.08-5.513c-.181-3.921-2.364-6.104-6.284-6.284-1.428-.064-1.878-.08-5.513-.08zM12 6.556c-3.004 0-5.444 2.44-5.444 5.444s2.44 5.444 5.444 5.444 5.444-2.44 5.444-5.444-2.44-5.444-5.444-5.444zm0 8.932c-1.928 0-3.488-1.56-3.488-3.488s1.56-3.488 3.488-3.488 3.488 1.56 3.488 3.488-1.56 3.488-3.488 3.488zm5.953-8.865c0-.853-.69-1.542-1.543-1.542s-1.542.689-1.542 1.542c0 .853.69 1.542 1.542 1.542s1.543-.689 1.543-1.542z"/></svg>
+              </a>
+              <!-- LinkedIn -->
+              <a href="https://www.linkedin.com/in/luqman-habib-8099b2342/" target="_blank" aria-label="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 0H3C1.34 0 0 1.34 0 3v18c0 1.66 1.34 3 3 3h18c1.66 0 3-1.34 3-3V3c0-1.66-1.34-3-3-3zM8 19H5v-9h3v9zM6.5 8.25c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zM19 19h-3v-4.5c0-.986-.814-1.5-1.5-1.5-.686 0-1.5.514-1.5 1.5V19h-3V9h3v1.5c.986-1.32 2.584-1.82 3.5-1.5.916.32 1.5 1.09 1.5 2.5V19z"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      &copy; <span id="y"></span> Vibex Studio. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    // -----------------------------
+    // Particles.js configuration
+    // -----------------------------
+    particlesJS('particles-js', {
+      "particles": {
+        "number": {
+          "value": 80,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#7c5cff"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          },
+          "polygon": {
+            "nb_sides": 5
+          }
+        },
+        "opacity": {
+          "value": 0.5,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": false,
+            "speed": 40,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#95a3b8",
+          "opacity": 0.4,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 6,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": true,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": true,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 400,
+            "line_linked": {
+              "opacity": 1
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 200,
+            "duration": 0.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true
+    });
+
+    // -----------------------------
+    // Intersection reveals
+    // -----------------------------
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting) {
+          e.target.classList.add('fade-in');
+          io.unobserve(e.target);
+        }
+      })
+    }, { threshold:.12 })
+    document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+
+    // -----------------------------
+    // Tilt effect for testimonial cards
+    // -----------------------------
+    document.querySelectorAll('.tilt').forEach(card=>{
+      let bounds;
+      function enter(){
+        bounds = card.getBoundingClientRect();
+        card.style.willChange = 'transform';
+      }
+      function leave(){
+        card.style.transform = '';
+        card.style.willChange = 'auto';
+      }
+      function move(e){
+        const x = (e.clientX - bounds.left) / bounds.width - .5;
+        const y = (e.clientY - bounds.top) / bounds.height - .5;
+        const rx = (y * -6).toFixed(2);
+        const ry = (x * 6).toFixed(2);
+        card.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+      }
+      card.addEventListener('mouseenter', enter);
+      card.addEventListener('mousemove', move);
+      card.addEventListener('mouseleave', leave);
+      // touch safe
+      card.addEventListener('touchstart', enter, {passive:true});
+      card.addEventListener('touchend', leave);
+    });
+
+    // Set footer year
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

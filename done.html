@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --bg:#0b0e13;
+            --bg-2:#0f141c;
+            --ink:#e9eef6;
+            --muted:#95a3b8;
+            --brand:#7c5cff;
+            --accent:#00d9ff;
+            --glow: 0 0 24px rgba(124,92,255,.35), 0 0 48px rgba(0,217,255,.15);
+            --radius: 18px;
+            --shadow: 0 6px 30px rgba(0,0,0,.35);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--ink);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 2rem;
+        }
+        .container {
+            background-color: var(--bg-2);
+            padding: 3rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            max-width: 600px;
+            width: 80%;
+        }
+        h1 {
+            color: var(--brand);
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+        }
+        p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--muted);
+            margin-bottom: 2rem;
+        }
+        a {
+            background-color: var(--brand);
+            color: var(--ink);
+            padding: 1em 2em;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        a:hover {
+            background-color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Thank You!</h1>
+        <p>Your message has been successfully sent. We will get back to you shortly.</p>
+        <a href="index.html">Go Back to Homepage</a>
+    </div>
+</body>
+</html>
