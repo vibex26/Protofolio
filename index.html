@@ -3,27 +3,30 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Vibex Studio — Cinematic video editing portfolio with animated particle background, glowing typography, and smooth interactions." />
-  <title>Vibex Studio, Editing Portfolio</title>
+  <meta name="description" content="Vibex Studio — Professional video editing services with cinematic quality, motion graphics, and sound design." />
+  <title>Vibex Studio — Professional Video Editing</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+
   <style>
-    /* ----------------------------
-       Base + Theme
-    ------------------------------*/
+    /* Professional Color Scheme */
     :root{
-      --bg:#0b0e13;
-      --bg-2:#0f141c;
-      --ink:#e9eef6;
-      --muted:#95a3b8;
-      --brand:#7c5cff; /* vibey purple */
-      --accent:#00d9ff; /* cyan */
-      --glow: 0 0 24px rgba(124,92,255,.35), 0 0 48px rgba(0,217,255,.15);
-      --radius: 18px;
-      --shadow: 0 6px 30px rgba(0,0,0,.35);
-      --ring: 0 0 0 2px rgba(124,92,255,.35);
+      --bg:#0a0f1c;
+      --bg-2:#111827;
+      --ink:#f8fafc;
+      --muted:#94a3b8;
+      --brand:#3b82f6;
+      --accent:#06b6d4;
+      --glow: 0 0 20px rgba(59, 130, 246, 0.15);
+      --radius: 12px;
+      --shadow: 0 4px 20px rgba(0,0,0,.25);
+      --ring: 0 0 0 2px rgba(59, 130, 246, 0.25);
     }
+    
     *{box-sizing:border-box}
     html,body{
       margin:0;
@@ -31,7 +34,7 @@
       scroll-behavior:smooth;
       background:var(--bg);
       color:var(--ink);
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Inter', sans-serif;
       line-height:1.6;
       font-size:16px;
       -webkit-font-smoothing:antialiased;
@@ -54,11 +57,11 @@
     h1,h2,h3,h4{
       margin:0;
       line-height:1.2;
-      font-weight:700;
-      letter-spacing:-.03em;
+      font-weight:600;
+      letter-spacing:-0.02em;
     }
-    h1{font-size:clamp(2.5rem, 5vw, 4rem)}
-    h2{font-size:clamp(1.75rem, 4vw, 3rem)}
+    h1{font-size:clamp(2.5rem, 5vw, 3.5rem)}
+    h2{font-size:clamp(1.75rem, 4vw, 2.5rem)}
     h3{font-size:clamp(1.25rem, 3vw, 1.75rem)}
     h4{font-size:clamp(1rem, 2vw, 1.25rem)}
     img{
@@ -69,17 +72,17 @@
       pointer-events:none;
     }
     button{
-      background:var(--bg-2);
+      background:var(--brand);
       color:var(--ink);
       border:none;
-      padding:1em 1.75em;
-      border-radius:12px;
+      padding:0.875rem 1.75rem;
+      border-radius:50px;
       font-weight:500;
       cursor:pointer;
       transition:all .2s ease;
     }
     button:hover{
-      background:var(--brand);
+      background:var(--accent);
       color:var(--ink);
       box-shadow:var(--shadow);
     }
@@ -100,6 +103,26 @@
     /* ----------------------------
        Layout
     ------------------------------*/
+    .video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .video-background video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.08;
+    }
     main{
       position:relative;
       z-index:2;
@@ -119,7 +142,7 @@
     .portfolio-grid{
       display:grid;
       grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
-      gap:1rem;
+      gap:1.5rem;
     }
     .portfolio-grid .video-embed{
       position:relative;
@@ -150,8 +173,9 @@
     .reviews-grid{
       display:grid;
       grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
-      gap:1rem;
+      gap:1.5rem;
     }
+
     .about-layout{
       display:flex;
       flex-direction:column;
@@ -210,8 +234,6 @@
       -webkit-background-clip:text;
       background-clip:text;
       color:transparent;
-      -webkit-filter: drop-shadow(0 0 10px rgba(124,92,255,.35));
-      filter: drop-shadow(0 0 10px rgba(124,92,255,.35));
     }
     .tagline{
       font-size:clamp(1rem, 2vw, 1.2rem);
@@ -222,11 +244,10 @@
     .about-text .animated-glow{
       position:relative;
       animation:glow 10s ease-in-out infinite alternate;
-      text-shadow:0 0 10px var(--brand), 0 0 20px var(--brand);
     }
     @keyframes glow{
-      0% { text-shadow:0 0 10px var(--brand), 0 0 20px var(--brand); }
-      100% { text-shadow:0 0 10px var(--accent), 0 0 20px var(--accent); }
+      0% { color: var(--brand); }
+      100% { color: var(--accent); }
     }
 
     /* ----------------------------
@@ -242,107 +263,87 @@
     }
     
     /* ----------------------------
-       Header
+       Professional Header
     ------------------------------*/
     header{
       position:sticky;
       top:0;
       z-index:10;
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
-      background:linear-gradient(180deg, rgba(15,20,28,.8), rgba(15,20,28,.35));
-      border-bottom:1px solid rgba(255,255,255,.06);
+      backdrop-filter:blur(12px);
+      background:rgba(10, 15, 28, 0.9);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
     header .container{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
+      padding-top:.75rem;
+      padding-bottom:.75rem;
     }
-    .logo h3{
-      color:var(--brand);
-    }
-    .logo h3 span{
-      color:var(--accent);
-    }
-    .logo a{
-      text-decoration:none;
-    }
-    .logo h3::before{
-      content:'';
+    
+    /* Professional Logo */
+    .nav-logo{
+      width:36px;
+      height:36px;
+      object-fit:contain;
+      border-radius:8px;
       display:inline-block;
-      width:24px;
-      height:24px;
-      background:var(--brand);
-      border-radius:50%;
-      vertical-align:middle;
-      margin-right:.5rem;
-      box-shadow:var(--glow);
     }
+    
+    /* Professional Navigation */
     nav a{
-      color:var(--muted);
+      color:var(--ink);
       margin-left:1.5rem;
       font-weight:500;
+      opacity:0.9;
+      transition:color .15s ease, opacity .15s ease;
+    }
+    nav a:hover, nav a:focus{
+      color:var(--accent);
+      opacity:1;
+    }
+    
+    /* Contact Button - Positioned at corner */
+    .contact-btn-container {
+      margin-left: auto;
     }
     nav a.btn{
       background:var(--brand);
       color:var(--ink);
-      padding:.75em 1.5em;
-      border-radius:12px;
-      transition:all .2s ease;
+      padding:.5rem 1.25rem;
+      border-radius:8px;
+      font-weight:500;
+      opacity:1;
+      transition: all 0.3s ease;
     }
     nav a.btn:hover{
       background:var(--accent);
-      box-shadow:var(--shadow);
-    }
-    nav a.btn:focus-visible{
-      outline:none;
-      box-shadow:var(--ring);
+      transform:translateY(-2px);
+      box-shadow: var(--glow);
     }
     
     /* ----------------------------
-       Portfolio tiles
-    ------------------------------*/
-    .tile{
-      position:relative;
-      overflow:hidden;
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      display:flex;
-      flex-direction:column;
-      background:var(--bg-2);
-      transition:transform .2s ease, box-shadow .2s ease;
-    }
-    .tile:hover{
-      transform:translateY(-5px);
-      box-shadow:var(--glow);
-    }
-    .tile .inner{
-      padding:1.5rem;
-    }
-    .tile .meta{
-      color:var(--muted);
-      font-size:.9rem;
-    }
-    
-    /* ----------------------------
-       Testimonial cards
+       Professional Cards
     ------------------------------*/
     .card{
-      background:var(--bg-2);
+      background:rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border-radius:var(--radius);
       padding:2rem;
       box-shadow:var(--shadow);
-      transform-style:preserve-3d;
-      transform:perspective(700px) rotateX(0deg) rotateY(0deg) translateZ(0);
-      transition:transform .15s ease-out;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition:transform .15s ease-out, background-color 0.3s ease;
+    }
+    .card:hover {
+      background:rgba(17, 24, 39, 0.85);
+      transform: translateY(-5px);
     }
     .card blockquote{
       margin:0 0 1rem;
       font-style:italic;
-      color:var(--ink);
+      color:var(--muted);
     }
     .card .author{
       font-weight:600;
+      color:var(--ink);
     }
     .card .author span{
       color:var(--muted);
@@ -351,74 +352,119 @@
     }
 
     /* ----------------------------
-       Tools
-    ------------------------------*/
-    .tool-icon{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      transition:transform .2s ease;
-    }
-    .tool-icon svg{
-      width:70px;
-      height:70px;
-      transition:filter .3s ease, transform .2s ease;
-    }
-    .tool-icon:hover{
-      transform:translateY(-5px);
-    }
-    .tool-icon:hover svg{
-      transform:scale(1.05);
-      filter: drop-shadow(0 0 10px rgba(124,92,255,.5));
-    }
-    .tool-icon span{
-      margin-top:.5rem;
-      font-weight:500;
-    }
-
-    /* ----------------------------
-       Contact Form
+       Professional Contact Form
     ------------------------------*/
     .form-card, .contact-info-card{
-      background:var(--bg-2);
+      background:rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       padding:2rem;
       border-radius:var(--radius);
       box-shadow:var(--shadow);
+      height: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     }
-    form{
-      display:flex;
-      flex-direction:column;
-      gap:1rem;
+    .form-card:hover, .contact-info-card:hover {
+      background:rgba(17, 24, 39, 0.85);
+      transform: translateY(-5px);
+      box-shadow: var(--glow);
     }
-    input,textarea{
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.1);
-      color:var(--ink);
-      padding:1em;
-      border-radius:8px;
+    .form-floating > .form-control {
+      background: rgba(255,255,255,.05) !important;
+      border: 1px solid rgba(255,255,255,.1);
+      color: var(--ink) !important;
+      height: calc(3.5rem + 2px);
+      line-height: 1.25;
+      border-radius: 8px;
     }
-    input:focus,textarea:focus{
-      outline:none;
-      border-color:var(--brand);
+    .form-floating > .form-control:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25);
     }
-    textarea{
-      resize:vertical;
+    .form-floating > label {
+      color: var(--muted);
+      padding: 1rem;
+      opacity: 0.8;
     }
-    .contact-info-card .info-row{
-      display:flex;
-      align-items:center;
-      gap:1rem;
-      margin-bottom:1rem;
+    .form-floating > .form-control:focus ~ label,
+    .form-floating > .form-control:not(:placeholder-shown) ~ label {
+      color: var(--brand);
+      opacity: 1;
+      transform: scale(.85) translateY(-1rem) translateX(.15rem);
     }
-    .contact-info-card .info-row svg{
-      width:24px;
-      height:24px;
-      fill:var(--brand);
+    .form-control.is-invalid {
+      border-color: #dc3545;
+      box-shadow: 0 0 0 0.25rem rgba(220,53,69,.25);
     }
-    .contact-info-card a{
-      color:var(--ink);
+    textarea.form-control {
+      min-height: 120px;
+    }
+    .btn-primary {
+      background: var(--brand);
+      border: none;
+      padding: 0.8rem 2rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+    }
+    .btn-primary:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: var(--glow);
+    }
+    .btn-primary:disabled {
+      background: var(--brand);
+      opacity: 0.7;
+    }
+    .contact-info-card {
+      background: linear-gradient(145deg, var(--bg-2), rgba(17,24,39,.9));
+    }
+    .contact-info-card .info-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      background: rgba(255,255,255,.03);
+      transition: all 0.3s ease;
+      color: var(--muted);
+    }
+    .contact-info-card .info-row:hover {
+      background: rgba(255,255,255,.05);
+      transform: translateX(5px);
+    }
+    .contact-info-card .info-row svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--brand);
+      transition: all 0.3s ease;
+      opacity: 0.8;
+    }
+    .contact-info-card .info-row:hover svg {
+      fill: var(--accent);
+      transform: scale(1.1);
+      opacity: 1;
+    }
+    .contact-info-card a {
+      color: var(--muted);
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .contact-info-card a:hover {
+      color: var(--accent);
+    }
+    .toast {
+      background: var(--bg-2) !important;
+      border: 1px solid rgba(255,255,255,.1) !important;
+      box-shadow: var(--shadow);
+    }
+    .toast.bg-success {
+      border-left: 4px solid #198754 !important;
+    }
+    .toast.bg-danger {
+      border-left: 4px solid #dc3545 !important;
     }
     .social-links{
       display:flex;
@@ -428,17 +474,17 @@
     }
     .social-links a svg{
       fill:var(--muted);
-      width:30px;
-      height:30px;
-      transition:transform .2s ease, filter .3s ease;
+      width:24px;
+      height:24px;
+      transition:transform .2s ease, fill .3s ease;
     }
     .social-links a:hover svg{
       transform:scale(1.1);
-      filter: drop-shadow(0 0 8px rgba(124,92,255,.7));
+      fill: var(--accent);
     }
 
     /* ----------------------------
-       Footer
+       Professional Footer
     ------------------------------*/
     footer{
       background:var(--bg-2);
@@ -452,17 +498,37 @@
        Responsive Adjustments
     ------------------------------*/
     @media(max-width:768px){
-      nav{
-        display:none;
-      }
       .logo h3::before{
         display:none;
       }
-    }
-    @media(min-width:768px){
-      .contact-grid{
-        grid-template-columns:1fr 1fr;
+      .nav-logo{width:30px;height:30px;margin-right:.5rem}
+      
+      /* Mobile navbar adjustments */
+      .navbar-collapse{
+        background: linear-gradient(180deg, rgba(10,15,28,0.95), rgba(10,15,28,0.98));
+        padding: 1rem;
+        margin-top: .5rem;
+        border-radius: 12px;
+        z-index: 1040;
       }
+      .navbar-nav .nav-link{padding: .6rem 0; color:var(--ink); font-weight:500;}
+      /* Make toggler icon visible on dark background */
+      .navbar-toggler{
+        border-color: rgba(255,255,255,0.08);
+      }
+      .navbar-toggler-icon{
+        /* Use an inline SVG as background so it's always visible on dark */
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='30' height='30'><path stroke='rgba(255,255,255,0.95)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+    
+    /* Section dividers */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+      margin: 2rem 0;
     }
   </style>
 </head>
@@ -471,29 +537,38 @@
   <!-- Particles.js Container -->
   <div id="particles-js"></div>
 
-  <!-- Header -->
-  <header>
-    <div class="container">
-      <div class="logo">
-        <a href="#hero">
-          <h3>Vibex<span>Studio</span></h3>
-        </a>
+  <!-- Video Background -->
+  <div class="video-background">
+    <video autoplay muted loop playsinline>
+      <source src="/assets/background.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- Professional Header -->
+  <header class="sticky-top">
+      <div class="container">
+        <nav class="navbar navbar-expand-md navbar-dark p-0">
+          <a class="navbar-brand d-flex align-items-center" href="#hero">
+            <img src="/assets/logo.png" alt="Vibex Studio" class="nav-logo me-2" onerror="this.style.display='none'" />
+            <div class="logo">
+              <h3 class="m-0">Vibex</h3>
+            </div>
+          </a>
+          
+          <!-- Contact Button - Always visible at corner -->
+          <div class="contact-btn-container">
+            <a class="btn btn-primary" href="#contact" style="border-radius: 50px;">Contact</a>
+          </div>
+        </nav>
       </div>
-      <nav>
-        <a href="#about">About</a>
-        <a href="#portfolio">Portfolio</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#contact" class="btn">Get a Quote</a>
-      </nav>
-    </div>
-  </header>
+    </header>
 
   <main>
     <!-- Hero Section -->
     <section id="hero" class="hero">
       <div class="container">
-        <h1 class="fade-in">Crafting Cinematic <br /><span class="gradient">Experiences</span></h1>
-        <p class="tagline fade-in" style="animation-delay:.2s">We bring your vision to life through professional video editing, motion graphics, and sound design. From commercials to films, we create visuals that resonate.</p>
+        <h1 class="fade-in">Professional <br /><span class="gradient">Video Editing</span></h1>
+        <p class="tagline fade-in" style="animation-delay:.2s">We transform your vision into compelling visual stories through professional editing, motion graphics, and sound design. Quality that elevates your brand.</p>
         <button class="fade-in" style="animation-delay:.4s" onclick="location.href='#contact'">Start a Project</button>
       </div>
     </section>
@@ -501,102 +576,30 @@
     <!-- About Section -->
     <section id="about" class="content">
       <div class="container">
-        <h2>About Us:</h2>
+        <h2>About Vibex</h2>
+        <div class="section-divider"></div>
         <div class="about-layout reveal">
-          <div class="about-image">
-            <img src="mrrobot.png" alt="Vibex Studio team member" />
-          </div>
           <div class="about-text">
-            <h3 style="  animation:glow 10s ease-in-out infinite alternate;
-      text-shadow:0 0 10px var(--brand), 0 0 20px var(--brand); ">Editor:</h3>
-            <p>
-              we create
-              <span class="animated-glow">high-quality, engaging</span> reels for Instagram, TikTok, and YouTube Shorts using<span class="animated-glow"> Adobe Softwares.</span>.   
-our edits include smooth transitions, motion graphics, text animations, sound design, and cinematic color grading, all optimized for social media.
-From quick promotional clips to viral, worthy content, we deliver videos that grab attention and keep viewers watching.
-project can be prepared with your refrence.
+            <p class="tagline fade-in" style="animation-delay:.2s; max-width: 100%; margin: 0 0 1.5rem;">
+              We create <span class="animated-glow">high-quality, engaging</span> video content for social media platforms using industry-standard tools. 
+              Our edits include smooth transitions, motion graphics, text animations, sound design, and cinematic color grading, all optimized for maximum impact.
+              From promotional content to brand storytelling, we deliver videos that capture attention and communicate your message effectively.  
+              <br>
+              <br>
+              For our protofolio visit any social media and type our username <span class="animated-glow"> @vibex_26 </span>
             </p>
-            <p style="  animation:glow 10s ease-in-out infinite alternate;
-      text-shadow:0 0 10px var(--brand), 0 0 20px var(--brand); ">
-              𝚆𝚎 𝚍𝚘𝚗'𝚝 𝚓𝚞𝚜𝚝 𝚎𝚍𝚒𝚝 𝚠𝚎 𝚌𝚛𝚎𝚊𝚝𝚎,
-              𝚆𝚎 𝚠𝚘𝚗’𝚝 𝚓𝚞𝚜𝚝 𝚋𝚎 𝚌𝚕𝚒𝚎𝚗𝚝 𝚊𝚗𝚍 𝚎𝚍𝚒𝚝𝚘𝚛, 𝚠𝚎’𝚕𝚕 𝚋𝚎 𝚙𝚊𝚛𝚝𝚗𝚎𝚛𝚜, 𝚠𝚘𝚛𝚔𝚒𝚗𝚐 𝚝𝚘𝚐𝚎𝚝𝚑𝚎𝚛 𝚝𝚘 𝚐𝚛𝚘𝚠 𝚘𝚞𝚛 𝚋𝚛𝚊𝚗𝚍𝚜
-            </p>
+        
           </div>
         </div>
       </div>
     </section>
-    
-    <!-- Portfolio Section -->
-<section id="portfolio" class="content">
-  <div class="container">
-    <h2>Recent Work</h2>
-    <p class="tagline">A selection of our latest video editing projects. These are embedded directly from social media and play inline.</p>
-    <div class="portfolio-grid">
-
-      <article class="tile large reveal">
-        <div class="video-embed">
-          <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@vibex_26/video/7535453038580862215" data-video-id="7535453038580862215" style="max-width: 605px;min-width: 325px;">
-            <section></section>
-          </blockquote>
-          <script async src="https://www.tiktok.com/embed.js"></script>
-        </div>
-        <div class="inner">
-          <h4>Urban Adventure - Product Ad</h4>
-          <div class="meta">Editing • Color Grading • Sound Design</div>
-        </div>
-      </article>
-
-      <article class="tile reveal">
-        <div class="video-embed">
-          <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@vibex_26/video/7536476563764776199" data-video-id="7536476563764776199" style="max-width: 605px;min-width: 325px;">
-            <section></section>
-          </blockquote>
-          <script async src="https://www.tiktok.com/embed.js"></script>
-        </div>
-        <div class="inner">
-          <h4>Modern Cuisine - Promo</h4>
-          <div class="meta">Editing • Motion GFX • Sound Design</div>
-        </div>
-      </article>
-
-      <article class="tile reveal">
-        <div class="video-embed">
-          <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@vibex_26/video/7525518274147159314" data-video-id="7525518274147159314" style="max-width: 605px;min-width: 325px;">
-            <section></section>
-          </blockquote>
-          <script async src="https://www.tiktok.com/embed.js"></script>
-        </div>
-        <div class="inner">
-          <h4>Tech Startup - Explainer</h4>
-          <div class="meta">Editing • Motion GFX • Voiceover</div>
-        </div>
-      </article>
-
-      <article class="tile large reveal">
-        <div class="video-embed">
-          <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@vibex_26/video/7526229423155170567" data-video-id="7526229423155170567" style="max-width: 605px;min-width: 325px;">
-            <section></section>
-          </blockquote>
-          <script async src="https://www.tiktok.com/embed.js"></script>
-        </div>
-        <div class="inner">
-          <h4>Cinematic Travelogue - Documentary</h4>
-          <div class="meta">Color Grading • Music Scoring</div>
-        </div>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-
-
 
     <!-- Client Reviews Section -->
     <section id="reviews" class="content">
       <div class="container">
-        <h2>What Clients Say</h2>
+        <h2>reviews</h2>
         <p class="tagline">Trusted by brands and creators worldwide.</p>
+        <div class="section-divider"></div>
         <div class="reviews-grid">
           <!-- Review Card 1 -->
           <div class="card tilt reveal">
@@ -620,74 +623,139 @@ project can be prepared with your refrence.
     <!-- Contact Section -->
     <section id="contact" class="content">
       <div class="container">
-        <h2>Get a Quote</h2>
-        <p class="tagline">Let's collaborate on your next project. Fill out the form and we'll get back to you soon.</p>
+        <h2 style="font-size: 2.5rem; margin-bottom: 0.75rem;">Get a Quote</h2>
+        <p class="tagline" style="font-size: 1.1rem; margin-bottom: 2rem;">Let's collaborate on your next project. Fill out the form and we'll get back to you soon.</p>
+        <div class="section-divider"></div>
         <div class="contact-grid">
           <div class="form-card reveal">
-       <form action="https://api.web3forms.com/submit" method="POST" id="contactForm">
-    <input type="hidden" name="access_key" value="9e527324-cd91-41cc-a505-ebedf0cf149f">
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="email" name="email" placeholder="Your Email" required>
-    <textarea name="message" rows="5" placeholder="Tell us about your project" required></textarea>
-    <button type="submit">Send Message</button>
-</form>
+            <form action="https://api.web3forms.com/submit" method="POST" id="contactForm" class="needs-validation" novalidate>
+              <input type="hidden" name="access_key" value="9e527324-cd91-41cc-a505-ebedf0cf149f">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control bg-transparent text-light border-secondary" id="name" name="name" placeholder="Your Name" required style="font-size: 1rem; height: auto; padding: 0.75rem 0.5rem;">
+                <label for="name" style="font-size: 1rem; padding: 0.75rem 0.5rem;">Your Name</label>
+                <div class="invalid-feedback" style="font-size: 0.875rem;">Please enter your name</div>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control bg-transparent text-light border-secondary" id="email" name="email" placeholder="name@example.com" required style="font-size: 1rem; height: auto; padding: 0.75rem 0.5rem;">
+                <label for="email" style="font-size: 1rem; padding: 0.75rem 0.5rem;">Email Address</label>
+                <div class="invalid-feedback" style="font-size: 0.875rem;">Please enter a valid email address</div>
+              </div>
+              <div class="form-floating mb-4">
+                <textarea class="form-control bg-transparent text-light border-secondary" id="message" name="message" placeholder="Tell us about your project" style="font-size: 1rem; height: 120px; padding: 0.75rem 0.5rem;" required></textarea>
+                <label for="message" style="font-size: 1rem; padding: 0.75rem 0.5rem;">Project Details</label>
+                <div class="invalid-feedback" style="font-size: 0.875rem;">Please tell us about your project</div>
+              </div>
+              <button class="btn btn-primary btn-lg w-100" type="submit" id="submitButton" style="font-size: 1.1rem; padding: 1rem;">
+                <span class="d-flex align-items-center justify-content-center">
+                  <span>Send Message</span>
+                  <span class="spinner-border spinner-border-sm ms-2 d-none" role="status" id="submitSpinner"></span>
+                </span>
+              </button>
+            </form>
 
-<script>
-    const form = document.getElementById('contactForm');
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(form);
-        fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Redirect to your custom page
-                window.location.href = 'done.html';
-            } else {
-                alert('An error occurred. Please try again.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Something went wrong!');
-        });
-    });
-</script>
+            <!-- Toast for success/error messages -->
+            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+              <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="successToast">
+                <div class="d-flex">
+                  <div class="toast-body">
+                    Message sent successfully! We'll get back to you soon.
+                  </div>
+                  <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+              </div>
+              <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" id="errorToast">
+                <div class="d-flex">
+                  <div class="toast-body">
+                    Oops! Something went wrong. Please try again.
+                  </div>
+                  <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+              </div>
+            </div>
+
+            <script>
+              const form = document.getElementById('contactForm');
+              const submitButton = document.getElementById('submitButton');
+              const submitSpinner = document.getElementById('submitSpinner');
+              const successToast = new bootstrap.Toast(document.getElementById('successToast'));
+              const errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+
+              form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (!form.checkValidity()) {
+                  e.stopPropagation();
+                  form.classList.add('was-validated');
+                  return;
+                }
+
+                // Disable button and show spinner
+                submitButton.disabled = true;
+                submitSpinner.classList.remove('d-none');
+
+                const formData = new FormData(form);
+                fetch(form.action, {
+                  method: 'POST',
+                  body: formData,
+                  headers: {
+                    'Accept': 'application/json'
+                  }
+                })
+                .then(response => response.json())
+                .then(data => {
+                  if (data.success) {
+                    successToast.show();
+                    form.reset();
+                    form.classList.remove('was-validated');
+                  } else {
+                    errorToast.show();
+                  }
+                })
+                .catch(error => {
+                  console.error('Error:', error);
+                  errorToast.show();
+                })
+                .finally(() => {
+                  // Re-enable button and hide spinner
+                  submitButton.disabled = false;
+                  submitSpinner.classList.add('d-none');
+                });
+              });
+            </script>
           </div>
-          <div class="contact-info-card reveal" >
-            <h3>Get in Touch</h3>
-            <i style="  animation:glow 10s ease-in-out infinite alternate;
-      text-shadow:0 0 10px var(--brand), 0 0 20px var(--brand); ">Ready to start? Contact us through the form, or reach out directly via email or phone. We look forward to hearing from you.</i>
-            <div class="info-row">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 4h-4v-2c0-1.1-.9-2-2-2h-8c-1.1 0-2 .9-2 2v2H2c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 6h16v12H4V6zm2 1.5h12V9H6V7.5zM6 10.5h12V12H6V10.5z"/></svg>
-              <a href="mailto:info@vibexstudio.com">xhitler26@gmail.com</a>
+          <div class="contact-info-card reveal">
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Get in Touch</h3>
+            <p>
+              Ready to start? Contact us through the form, or reach out directly via email or phone.
+            </p>
+            <div class="info-row mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="flex-shrink-0" style="width: 20px; height: 20px;">
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
+              </svg>
+              <a href="mailto:xhitler26@gmail.com" class="text-decoration-none" style="font-size: 1rem;">xhitler26@gmail.com</a>
             </div>
-            <div class="info-row">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62 10.79l-1.41-1.41-1.41 1.41c-.39.39-.39 1.02 0 1.41l1.41 1.41 1.41-1.41c.39-.39.39-1.02 0-1.41zM20 18.5V16c-2.21 0-4-.56-4.5-1.5-1.12 1.12-2.3 2.1-3.5 2.1-1.2 0-2.38-.98-3.5-2.1-.5.94-2.29 1.5-4.5 1.5V18.5c2.21 0 4 .56 4.5 1.5 1.12-1.12 2.3-2.1 3.5-2.1 1.2 0 2.38.98 3.5 2.1.5-.94 2.29-1.5 4.5-1.5zM12 2c-5.52 0-10 4.48-10 10s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM12 4.5c-4.14 0-7.5 3.36-7.5 7.5S7.86 19.5 12 19.5s7.5-3.36 7.5-7.5S16.14 4.5 12 4.5z"/></svg>
-              <a href="tel:+1-123-456-7890">+92 315 9857704</a>
+            <div class="info-row mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="flex-shrink-0" style="width: 20px; height: 20px;">
+                <path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1zM19 12h2c0-4.97-4.03-9-9-9v2c3.87 0 7 3.13 7 7zm-4 0h2c0-2.76-2.24-5-5-5v2c1.66 0 3 1.34 3 3z"/>
+              </svg>
+              <a href="tel:+923159857704" class="text-decoration-none" style="font-size: 1rem;">+92 315 9857704</a>
             </div>
-            <div class="social-links">
+
+            <div class="social-links" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.1);">
               <!-- Facebook -->
-              <a href="https://www.facebook.com/vibex27" target="_blank" aria-label="Facebook">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.675 0h-21.35c-.733 0-1.325.592-1.325 1.325v21.35c0 .733.592 1.325 1.325 1.325h11.378v-9.294h-3.136v-3.622h3.136v-2.671c0-3.111 1.89-4.806 4.672-4.806 1.325 0 2.464.099 2.796.143v3.235h-1.916c-1.503 0-1.796.716-1.796 1.764v2.327h3.585l-.467 3.622h-3.118v9.294h6.068c.733 0 1.325-.592 1.325-1.325v-21.35c0-.733-.592-1.325-1.325-1.325z"/></svg>
+              <a href="https://www.facebook.com/vibex27" target="_blank" aria-label="Facebook" class="social-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 18px; height: 18px;"><path d="M22.675 0h-21.35c-.733 0-1.325.592-1.325 1.325v21.35c0 .733.592 1.325 1.325 1.325h11.378v-9.294h-3.136v-3.622h3.136v-2.671c0-3.111 1.89-4.806 4.672-4.806 1.325 0 2.464.099 2.796.143v3.235h-1.916c-1.503 0-1.796.716-1.796 1.764v2.327h3.585l-.467 3.622h-3.118v9.294h6.068c.733 0 1.325-.592 1.325-1.325v-21.35c0-.733-.592-1.325-1.325-1.325z"/></svg>
               </a>
               <!-- TikTok -->
-              <a href="https://www.tiktok.com/@vibex_26" target="_blank" aria-label="TikTok">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.25 10.74h-3.92V6.82h3.92V4.99c-.19-1.93-1.07-3.72-2.82-5.07-2.02-1.5-4.43-1.9-6.9-1.22-.92.25-1.8.68-2.58 1.25-.79.57-1.46 1.25-2.01 2.02-.55.77-.96 1.6-1.23 2.5-1.12 3.9-.38 8.16 2.09 11.23 2.47 3.07 6.13 4.88 9.94 4.88 2.08 0 4.09-.5 5.89-1.44 1.8-1 3.2-2.3 4.2-3.9 1-1.6 1.6-3.4 1.7-5.32h-3.92c-.11 1.6-.68 3.1-1.63 4.41-1.07 1.4-2.5 2.5-4.14 3.1-1.64.6-3.41.8-5.17.5-3.04-.5-5.6-2.1-7.23-4.63-1.63-2.53-2.3-5.6-1.93-8.8.11-1.1.4-2.16.88-3.14.48-.98 1.1-1.86 1.84-2.64.74-.78 1.57-1.44 2.48-1.97.91-.53 1.86-.92 2.85-1.16 1.09-.27 2.22-.38 3.35-.38 2.14 0 4.2.5 6.06 1.47 1.86.97 3.31 2.37 4.3 4.09z"/></svg>
+              <a href="https://www.tiktok.com/@vibex_26" target="_blank" aria-label="TikTok" class="social-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px;"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.41v13.67a2.89 2.89 0 11-2.89-2.89c.28 0 .56.05.82.13v-3.47a6.37 6.37 0 00-.82-.05A6.36 6.36 0 003 15.75 6.36 6.36 0 009.36 22a6.36 6.36 0 006.36-6.36V9.39a8.19 8.19 0 004.77 1.49v-3.41a4.85 4.85 0 01-.9-.78z"/></svg>
               </a>
               <!-- Instagram -->
-              <a href="https://www.instagram.com/vibex_26/" target="_blank" aria-label="Instagram">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.25.148 4.773 1.671 4.921 4.921.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.148 3.25-1.671 4.773-4.921 4.921-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-3.25-.148-4.773-1.671-4.921-4.921-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.148-3.25 1.671-4.773 4.921-4.921 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.635 0-4.085.016-5.513.08-3.921.181-6.104 2.364-6.284 6.284-.064 1.428-.08 1.878-.08 5.513s.016 4.085.08 5.513c.181 3.921 2.364 6.104 6.284 6.284 1.428.064 1.878.08 5.513.08s4.085-.016 5.513-.08c3.921-.181 6.104-2.364 6.284-6.284.064-1.428.08-1.878.08-5.513s-.016-4.085-.08-5.513c-.181-3.921-2.364-6.104-6.284-6.284-1.428-.064-1.878-.08-5.513-.08zM12 6.556c-3.004 0-5.444 2.44-5.444 5.444s2.44 5.444 5.444 5.444 5.444-2.44 5.444-5.444-2.44-5.444-5.444-5.444zm0 8.932c-1.928 0-3.488-1.56-3.488-3.488s1.56-3.488 3.488-3.488 3.488 1.56 3.488 3.488-1.56 3.488-3.488 3.488zm5.953-8.865c0-.853-.69-1.542-1.543-1.542s-1.542.689-1.542 1.542c0 .853.69 1.542 1.542 1.542s1.543-.689 1.543-1.542z"/></svg>
+              <a href="https://www.instagram.com/vibex_26/" target="_blank" aria-label="Instagram" class="social-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.25.148 4.773 1.671 4.921 4.921.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.148 3.25-1.671 4.773-4.921 4.921-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-3.25-.148-4.773-1.671-4.921-4.921-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.148-3.25 1.671-4.773 4.921-4.921 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.635 0-4.085.016-5.513.08-3.921.181-6.104 2.364-6.284 6.284-.064 1.428-.08 1.878-.08 5.513s.016 4.085.08 5.513c.181 3.921 2.364 6.104 6.284 6.284 1.428.064 1.878.08 5.513.08s4.085-.016 5.513-.08c3.921-.181 6.104-2.364 6.284-6.284.064-1.428.08-1.878.08-5.513s-.016-4.085-.08-5.513c-.181-3.921-2.364-6.104-6.284-6.284-1.428-.064-1.878-.08-5.513-.08zm0 4.393a5.607 5.607 0 100 11.214 5.607 5.607 0 000-11.214zm0 9.245a3.638 3.638 0 110-7.276 3.638 3.638 0 010 7.276zm5.953-9.512a1.281 1.281 0 11-2.563 0 1.281 1.281 0 012.563 0z"/></svg>
               </a>
               <!-- LinkedIn -->
-              <a href="https://www.linkedin.com/in/luqman-habib-8099b2342/" target="_blank" aria-label="LinkedIn">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 0H3C1.34 0 0 1.34 0 3v18c0 1.66 1.34 3 3 3h18c1.66 0 3-1.34 3-3V3c0-1.66-1.34-3-3-3zM8 19H5v-9h3v9zM6.5 8.25c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zM19 19h-3v-4.5c0-.986-.814-1.5-1.5-1.5-.686 0-1.5.514-1.5 1.5V19h-3V9h3v1.5c.986-1.32 2.584-1.82 3.5-1.5.916.32 1.5 1.09 1.5 2.5V19z"/></svg>
+              <a href="https://www.linkedin.com/in/luqman-habib-8099b2342/" target="_blank" aria-label="LinkedIn" class="social-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path d="M21 0H3C1.34 0 0 1.34 0 3v18c0 1.66 1.34 3 3 3h18c1.66 0 3-1.34 3-3V3c0-1.66-1.34-3-3-3zM8 19H5v-9h3v9zM6.5 8.25c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zM19 19h-3v-4.5c0-.986-.814-1.5-1.5-1.5-.686 0-1.5.514-1.5 1.5V19h-3V9h3v1.5c.986-1.32 2.584-1.82 3.5-1.5.916.32 1.5 1.09 1.5 2.5V19z"/></svg>
               </a>
             </div>
           </div>
@@ -699,8 +767,7 @@ project can be prepared with your refrence.
   <!-- Footer -->
   <footer>
     <div class="container">
-      &copy; <span id="y"></span> Vibex Studio. All rights reserved.
-    </div>
+      &copy; <span id="y"></span> Vibex. All rights reserved.</div>
   </footer>
 
   <!-- Scripts -->
@@ -712,14 +779,14 @@ project can be prepared with your refrence.
     particlesJS('particles-js', {
       "particles": {
         "number": {
-          "value": 80,
+          "value": 70,
           "density": {
             "enable": true,
             "value_area": 800
           }
         },
         "color": {
-          "value": "#7c5cff"
+          "value": "#3b82f6"
         },
         "shape": {
           "type": "circle",
@@ -732,7 +799,7 @@ project can be prepared with your refrence.
           }
         },
         "opacity": {
-          "value": 0.5,
+          "value": 0.4,
           "random": false,
           "anim": {
             "enable": false,
@@ -754,13 +821,13 @@ project can be prepared with your refrence.
         "line_linked": {
           "enable": true,
           "distance": 150,
-          "color": "#95a3b8",
-          "opacity": 0.4,
+          "color": "#94a3b8",
+          "opacity": 0.3,
           "width": 1
         },
         "move": {
           "enable": true,
-          "speed": 6,
+          "speed": 4,
           "direction": "none",
           "random": false,
           "straight": false,
@@ -801,7 +868,7 @@ project can be prepared with your refrence.
             "speed": 3
           },
           "repulse": {
-            "distance": 200,
+            "distance": 150,
             "duration": 0.4
           },
           "push": {
@@ -858,6 +925,26 @@ project can be prepared with your refrence.
 
     // Set footer year
     document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+  <!-- Bootstrap JS bundle (includes Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+  <script>
+    // Bootstrap custom form validation
+    (function () {
+      'use strict'
+      var forms = document.querySelectorAll('.needs-validation')
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
   </script>
 </body>
 </html>
